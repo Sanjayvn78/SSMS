@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Submissions</title>
+
+<style>
+body {
+    font-family: 'Segoe UI';
+    background: #0f172a;
+    color: white;
+}
+
+.container {
+    padding: 30px;
+}
+
+table {
+    width: 100%;
+    background: white;
+    color: black;
+    border-radius: 10px;
+}
+
+th {
+    background: #2563eb;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>📊 Student Submissions</h2>
+
+    <table>
+        <tr>
+            <th>Student</th>
+            <th>Assignment</th>
+            <th>File</th>
+            <th>Time</th>
+        </tr>
+
+        {% for s in data %}
+        <tr>
+            <td>{{ s.student_name }}</td>
+            <td>{{ s.assignment.title }}</td>
+            <td>
+                <a href="{{ s.file.url }}" target="_blank">View</a>
+            </td>
+            <td>{{ s.submitted_at }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>

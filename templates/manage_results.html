@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Results</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI';
+        }
+
+        body {
+            display: flex;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            height: 100vh;
+            color: white;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .sidebar a.active {
+            background: rgba(255,255,255,0.3);
+            border-left: 5px solid #38bdf8;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout {
+            background: #ef4444;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+        }
+
+        /* LAYOUT */
+        .flex {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* CARD */
+        .card {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 15px;
+            width: 320px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #38bdf8;
+            color: black;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+
+        /* TABLE */
+        table {
+            width: 500px;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            overflow: hidden;
+            border-collapse: collapse;
+            box-shadow: 0px 5px 10px rgba(0,0,0,0.3);
+        }
+
+        th {
+            background: #1e3a8a;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f1f5f9;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>👨‍🏫 Teacher</h2>
+
+    <a href="/teacher_home/">Dashboard</a>
+    <a href="/upload_assignment/">Assignments</a>
+    <a href="/upload_notes/">Notes</a>
+    <a href="/upload_timetable/">Timetable</a>
+    <a href="/manage_results/" class="active">Results</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2><i class="fa fa-chart-line"></i> Manage Results</h2>
+        <a href="/" class="logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="flex">
+
+        <!-- ADD RESULT -->
+        <div class="card">
+            <h3><i class="fa fa-plus-circle"></i> Add Result</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="text" name="subject" placeholder="Subject" required>
+                <input type="number" name="marks" placeholder="Marks" required>
+
+                <button type="submit">Add Result</button>
+            </form>
+        </div>
+
+        <!-- TABLE -->
+        <div>
+            <h3><i class="fa fa-table"></i> Student Results</h3>
+
+            {% if data %}
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for r in data %}
+                <tr>
+                    <td>{{ r.subject }}</td>
+                    <td>{{ r.marks }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'delete_result' r.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-btn">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <p>No results added yet</p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

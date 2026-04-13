@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Portal</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: linear-gradient(to right, #cce0ff, #99c2ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            width: 350px;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #003366;
+        }
+
+        .role-btns button {
+            width: 45%;
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #e6f0ff;
+            font-weight: bold;
+        }
+
+        .active-role {
+            background: #004080 !important;
+            color: white;
+        }
+
+        .toggle {
+            margin: 15px 0;
+        }
+
+        .toggle button {
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            background: #e6f0ff;
+            border-radius: 5px;
+        }
+
+        .active-toggle {
+            background: #004080 !important;
+            color: white;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button.submit-btn {
+            width: 95%;
+            padding: 10px;
+            background: #004080;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🎓 College Portal</h2>
+
+    <!-- ROLE -->
+    <div class="role-btns">
+        <button id="studentBtn" class="active-role" onclick="selectRole('student')">
+            <i class="fa fa-user"></i> Student
+        </button>
+
+        <button id="teacherBtn" onclick="selectRole('teacher')">
+            <i class="fa fa-chalkboard-teacher"></i> Teacher
+        </button>
+    </div>
+
+    <!-- TOGGLE -->
+    <div class="toggle">
+        <button id="loginTab" class="active-toggle" onclick="showLogin()">Login</button>
+        <button id="signupTab" onclick="showSignup()">Sign Up</button>
+    </div>
+
+    <!-- FORM -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <!-- SIGNUP FIELD -->
+        <input type="password" id="confirmPassword" name="confirm_password"
+               placeholder="Confirm Password" style="display:none;">
+
+        <!-- ROLE -->
+        <input type="hidden" id="role" name="role" value="student">
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+
+    <!-- ERROR -->
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+</div>
+
+<script>
+
+function selectRole(role) {
+    document.getElementById("role").value = role;
+
+    document.getElementById("studentBtn").classList.remove("active-role");
+    document.getElementById("teacherBtn").classList.remove("active-role");
+
+    if(role === "student") {
+        document.getElementById("studentBtn").classList.add("active-role");
+    } else {
+        document.getElementById("teacherBtn").classList.add("active-role");
+    }
+}
+
+function showSignup() {
+    document.getElementById("confirmPassword").style.display = "block";
+
+    document.getElementById("loginTab").classList.remove("active-toggle");
+    document.getElementById("signupTab").classList.add("active-toggle");
+}
+
+function showLogin() {
+    document.getElementById("confirmPassword").style.display = "none";
+
+    document.getElementById("signupTab").classList.remove("active-toggle");
+    document.getElementById("loginTab").classList.add("active-toggle");
+}
+
+</script>
+
+</body>
+</html>

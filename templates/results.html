@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exam Results</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: #0f172a;
+            color: white;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: #1e293b;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            color: #38bdf8;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #cbd5f5;
+            text-decoration: none;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #334155;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 260px;
+            padding: 20px;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logout {
+            background: #ef4444;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* RESULT CARD */
+        .card {
+            background: #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .header {
+            background: #2563eb;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .sub-header {
+            text-align: center;
+            padding: 10px;
+            background: #0ea5e9;
+            font-weight: bold;
+        }
+
+        /* DETAILS */
+        .details {
+            padding: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+            padding: 10px 0;
+        }
+
+        .label {
+            color: #94a3b8;
+            font-weight: bold;
+        }
+
+        /* TABLE */
+        table {
+            width: 95%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #38bdf8;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        tr:hover {
+            background: #1e40af;
+        }
+
+        .pass {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        .note {
+            color: orange;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>🎓 SSMS</h2>
+
+    <a href="/student_home/"><i class="fa fa-home"></i> Dashboard</a>
+    <a href="/timetable/"><i class="fa fa-calendar"></i> Timetable</a>
+    <a href="/assignments/"><i class="fa fa-book"></i> Assignments</a>
+    <a href="/notes/"><i class="fa fa-file"></i> Notes</a>
+    <a href="/expenses/"><i class="fa fa-wallet"></i> Expenses</a>
+    <a href="/results/"><i class="fa fa-chart-bar"></i> Results</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <h2>📊 Exam Results</h2>
+        <a href="/" class="logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <!-- CARD -->
+    <div class="card">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h2>DR. N.G.P INSTITUTE OF TECHNOLOGY</h2>
+            <small>(AUTONOMOUS)</small>
+        </div>
+
+        <div class="sub-header">
+            END SEMESTER EXAMINATION RESULTS
+        </div>
+
+        <!-- DETAILS (DYNAMIC) -->
+        <div class="details">
+            <div class="row">
+                <div class="label">NAME</div>
+                <div>{{ request.user.username }}</div>
+            </div>
+
+            <div class="row">
+                <div class="label">REG NO</div>
+                <div>{{ student.reg_no }}</div>
+            </div>
+
+            <div class="row">
+                <div class="label">COURSE</div>
+                <div>{{ student.course }}</div>
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <table>
+            <tr>
+                <th>S.NO</th>
+                <th>SUBJECT</th>
+                <th>MARKS</th>
+                <th>GRADE</th>
+                <th>RESULT</th>
+            </tr>
+
+            {% for r in results %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ r.subject }}</td>
+                <td>{{ r.marks }}</td>
+
+                <td>
+                    {% if r.marks >= 90 %} O
+                    {% elif r.marks >= 80 %} A+
+                    {% elif r.marks >= 70 %} A
+                    {% elif r.marks >= 60 %} B+
+                    {% elif r.marks >= 50 %} B
+                    {% else %} U
+                    {% endif %}
+                </td>
+
+                <td class="{% if r.marks >= 50 %}pass{% else %}fail{% endif %}">
+                    {% if r.marks >= 50 %} PASS {% else %} FAIL {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="note">
+                UA: ABSENT &nbsp;&nbsp; U: FAIL &nbsp;&nbsp; WD: WITHDRAW
+            </div>
+
+            <p>
+                This is a provisional result. Final marksheet will be issued by the institution.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

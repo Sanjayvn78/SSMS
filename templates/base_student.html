@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Student Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+        }
+
+        .sidebar {
+            width: 240px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            color: white;
+            padding: 25px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.25s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.18);
+        }
+
+        .main {
+            flex: 1;
+            padding: 30px;
+            color: white;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logout {
+            background: #ff4d4d;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logout:hover {
+            background: #cc0000;
+        }
+
+        .content-card {
+            background: rgba(255,255,255,0.12);
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+            min-height: 80vh;
+        }
+
+        .content-card h2 {
+            margin-bottom: 20px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>🎓 SSMS</h2>
+    <a href="/student_home/"><i class="fa fa-home"></i> Dashboard</a>
+    <a href="/timetable/"><i class="fa fa-calendar"></i> Timetable</a>
+    <a href="/assignments/"><i class="fa fa-book"></i> Assignments</a>
+    <a href="/notes/"><i class="fa fa-file"></i> Notes</a>
+    <a href="/expenses/"><i class="fa fa-wallet"></i> Expenses</a>
+    <a href="/results/"><i class="fa fa-chart-bar"></i> Results</a>
+</div>
+
+<div class="main">
+    <div class="topbar">
+        <h1>{% block page_heading %}Student Page{% endblock %}</h1>
+        <a href="/" class="logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="content-card">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+</body>
+</html>

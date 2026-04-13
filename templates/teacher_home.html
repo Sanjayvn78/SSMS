@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI';
+        }
+
+        body {
+            display: flex;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+            color: white;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .sidebar a.active {
+            background: rgba(255,255,255,0.3);
+            border-left: 5px solid #00e5ff;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout {
+            background: #ff4d4d;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* GRID (2 PER ROW) */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        /* CARD */
+        .card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.25);
+        }
+
+        .card i {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>👨‍🏫 Teacher</h2>
+
+    <a href="/teacher_home/" class="active">Dashboard</a>
+    <a href="/upload_assignment/">Assignments</a>
+    <a href="/upload_notes/">Notes</a>
+    <a href="/upload_timetable/">Timetable</a>
+    <a href="/manage_results/">Results</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2>📊 Teacher Dashboard</h2>
+        <a href="/" class="logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+
+        <a href="/upload_assignment/" class="card">
+            <i class="fa fa-upload"></i>
+            <h3>Upload Assignment</h3>
+        </a>
+
+        <a href="/upload_notes/" class="card">
+            <i class="fa fa-book"></i>
+            <h3>Upload Notes</h3>
+        </a>
+
+        <a href="/upload_timetable/" class="card">
+            <i class="fa fa-calendar"></i>
+            <h3>Upload Timetable</h3>
+        </a>
+
+        <a href="/manage_results/" class="card">
+            <i class="fa fa-chart-line"></i>
+            <h3>Manage Results</h3>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

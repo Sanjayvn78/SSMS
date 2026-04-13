@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Timetable</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI';
+        }
+
+        body {
+            display: flex;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            height: 100vh;
+            color: white;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .sidebar a.active {
+            background: rgba(255,255,255,0.3);
+            border-left: 5px solid #38bdf8;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout {
+            background: #ef4444;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* FLEX */
+        .flex {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* FORM CARD */
+        .card {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 12px;
+            width: 350px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 6px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #38bdf8;
+            border: none;
+            border-radius: 6px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.1);
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #38bdf8;
+            color: black;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        tr:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>👨‍🏫 Teacher</h2>
+
+    <a href="/teacher_home/">Dashboard</a>
+    <a href="/upload_assignment/">Assignments</a>
+    <a href="/upload_notes/">Notes</a>
+    <a href="/upload_timetable/" class="active">Timetable</a>
+    <a href="/manage_results/">Results</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2><i class="fa fa-calendar"></i> Upload Timetable</h2>
+        <a href="/" class="logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="flex">
+
+        <!-- FORM -->
+        <div class="card">
+            <h3>Add Timetable</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="text" name="day" placeholder="Day" required>
+
+                <input type="text" name="p1" placeholder="Period 1">
+                <input type="text" name="p2" placeholder="Period 2">
+                <input type="text" name="p3" placeholder="Period 3">
+                <input type="text" name="p4" placeholder="Period 4">
+                <input type="text" name="p5" placeholder="Period 5">
+                <input type="text" name="p6" placeholder="Period 6">
+                <input type="text" name="p7" placeholder="Period 7">
+
+                <button type="submit">Add Timetable</button>
+            </form>
+        </div>
+
+        <!-- TABLE -->
+        <div style="flex:1;">
+            <h3>Weekly Timetable</h3>
+
+            <table>
+                <tr>
+                    <th>Day</th>
+                    <th>P1</th>
+                    <th>P2</th>
+                    <th>P3</th>
+                    <th>P4</th>
+                    <th>P5</th>
+                    <th>P6</th>
+                    <th>P7</th>
+                </tr>
+
+                {% for t in data %}
+                <tr>
+                    <td>{{ t.day }}</td>
+                    <td>{{ t.p1 }}</td>
+                    <td>{{ t.p2 }}</td>
+                    <td>{{ t.p3 }}</td>
+                    <td>{{ t.p4 }}</td>
+                    <td>{{ t.p5 }}</td>
+                    <td>{{ t.p6 }}</td>
+                    <td>{{ t.p7 }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

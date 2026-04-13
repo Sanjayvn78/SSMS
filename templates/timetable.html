@@ -1,0 +1,117 @@
+{% extends 'base_student.html' %}
+
+{% block title %}Timetable{% endblock %}
+{% block page_heading %}Timetable{% endblock %}
+
+{% block content %}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
+    }
+
+    th {
+        background: linear-gradient(to right, #2563eb, #1e40af);
+        color: white;
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 14px;
+        text-align: center;
+        border-bottom: 1px solid #e5e7eb;
+        font-weight: 600;
+        color: #1e293b;   /* 🔥 FIX: DARK TEXT */
+    }
+
+    tr:hover {
+        background: #f1f5f9;
+    }
+
+    /* Alternate row color */
+    tr:nth-child(even) {
+        background: #f9fafb;
+    }
+
+    /* Lunch column */
+    .lunch {
+        background: #fee2e2;
+        font-weight: bold;
+        color: #b91c1c;
+    }
+
+    /* Empty cell */
+    .empty-cell {
+        color: #9ca3af;
+    }
+
+    /* Title */
+    .title {
+        font-size: 22px;
+        margin-bottom: 20px;
+        color: #1e3a8a;
+        font-weight: bold;
+    }
+
+    /* Empty */
+    .empty {
+        text-align: center;
+        margin-top: 60px;
+        color: gray;
+    }
+</style>
+
+<div class="title">
+    📅 Weekly Timetable
+</div>
+
+{% if timetable %}
+
+<table>
+    <tr>
+        <th>Day</th>
+        <th>P1</th>
+        <th>P2</th>
+        <th>P3</th>
+        <th>P4</th>
+        <th>Lunch</th>
+        <th>P5</th>
+        <th>P6</th>
+        <th>P7</th>
+    </tr>
+
+    {% for t in timetable %}
+    <tr>
+        <td><b>{{ t.day }}</b></td>
+
+        <td>{{ t.p1|default:"-" }}</td>
+        <td>{{ t.p2|default:"-" }}</td>
+        <td>{{ t.p3|default:"-" }}</td>
+        <td>{{ t.p4|default:"-" }}</td>
+
+        <td class="lunch">🍴 Break</td>
+
+        <td>{{ t.p5|default:"-" }}</td>
+        <td>{{ t.p6|default:"-" }}</td>
+        <td>{{ t.p7|default:"-" }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% else %}
+
+<div class="empty">
+    <i class="fa fa-calendar-times fa-3x"></i>
+    <h3>No Timetable Uploaded</h3>
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assignments</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI';
+        }
+
+        body {
+            display: flex;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 230px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .sidebar a.active {
+            background: rgba(255,255,255,0.3);
+            font-weight: bold;
+            border-left: 5px solid #00e5ff;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+        }
+
+        .logout {
+            background: #ff4d4d;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* CARDS */
+        .card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            margin-top: 20px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .desc {
+            margin: 10px 0;
+            color: #e0e0e0;
+        }
+
+        .deadline {
+            font-weight: bold;
+        }
+
+        .late {
+            color: #ff4d4d;
+        }
+
+        .safe {
+            color: #00ffcc;
+        }
+
+        /* EMPTY */
+        .empty {
+            text-align: center;
+            margin-top: 100px;
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>🎓 SSMS</h2>
+
+    <a href="/student_home/">Dashboard</a>
+    <a href="/timetable/">Timetable</a>
+    <a href="/assignments/" class="active">Assignments</a>
+    <a href="/notes/">Notes</a>
+    <a href="/expenses/">Expenses</a>
+    <a href="/results/">Results</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2>📚 Assignments</h2>
+        <a href="/" class="logout">Logout</a>
+    </div>
+
+    {% if assignments %}
+
+        {% for a in assignments %}
+        <div class="card">
+
+            <div class="title">
+                {{ a.title }}
+            </div>
+
+            <div class="desc">
+                {{ a.description }}
+            </div>
+
+            <div class="deadline {% if a.deadline <= today %}late{% else %}safe{% endif %}">
+                <i class="fa fa-clock"></i> {{ a.deadline }}
+
+                <br>
+
+                {% if a.deadline <= today %}
+                    ⚠ Overdue
+                {% else %}
+                    ✅ On Time
+                {% endif %}
+            </div>
+
+        </div>
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            <i class="fa fa-folder-open fa-3x"></i>
+            <h3>No Assignments Available</h3>
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

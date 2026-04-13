@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI';
+        }
+
+        body {
+            display: flex;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 230px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .logout {
+            background: #ff4d4d;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logout:hover {
+            background: #cc0000;
+        }
+
+        /* CARDS */
+        .cards {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.25);
+        }
+
+        .card i {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>🎓 SSMS</h2>
+
+    <a href="/student_home/"><i class="fa fa-home"></i> Dashboard</a>
+    <a href="/timetable/"><i class="fa fa-calendar"></i> Timetable</a>
+    <a href="/assignments/"><i class="fa fa-book"></i> Assignments</a>
+    <a href="/notes/"><i class="fa fa-file"></i> Notes</a>
+    <a href="/expenses/"><i class="fa fa-wallet"></i> Expenses</a>
+    <a href="/results/"><i class="fa fa-chart-bar"></i> Results</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <h2>Welcome, Student 👨‍🎓</h2>
+        <a href="/" class="logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+
+        <a href="/timetable/" class="card">
+            <i class="fa fa-calendar"></i>
+            <h3>Timetable</h3>
+        </a>
+
+        <a href="/assignments/" class="card">
+            <i class="fa fa-book"></i>
+            <h3>Assignments</h3>
+        </a>
+
+        <a href="/notes/" class="card">
+            <i class="fa fa-file"></i>
+            <h3>Notes</h3>
+        </a>
+
+        <a href="/expenses/" class="card">
+            <i class="fa fa-wallet"></i>
+            <h3>Expenses</h3>
+        </a>
+
+        <a href="/results/" class="card">
+            <i class="fa fa-chart-bar"></i>
+            <h3>Results</h3>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

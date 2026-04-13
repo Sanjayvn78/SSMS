@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Tracker</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI';
+        }
+
+        body {
+            display: flex;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 230px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .sidebar a.active {
+            background: rgba(255,255,255,0.3);
+            font-weight: bold;
+            border-left: 5px solid #00e5ff;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+        }
+
+        .logout {
+            background: #ff4d4d;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* FLEX */
+        .flex {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* CARD */
+        .card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .form-card {
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #00c6ff;
+            border: none;
+            border-radius: 6px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #00e5ff;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .total {
+            margin-top: 15px;
+            font-size: 18px;
+            color: #00ffcc;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>🎓 SSMS</h2>
+
+    <a href="/student_home/">Dashboard</a>
+    <a href="/timetable/">Timetable</a>
+    <a href="/assignments/">Assignments</a>
+    <a href="/notes/">Notes</a>
+    <a href="/expenses/" class="active">Expenses</a>
+    <a href="/results/">Results</a>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <h2>💰 Expense Tracker</h2>
+        <a href="/" class="logout">Logout</a>
+    </div>
+
+    <div class="flex">
+
+        <!-- FORM -->
+        <div class="card form-card">
+            <h3>Add Expense</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="text" name="title" placeholder="Expense Name" required>
+                <input type="number" name="amount" placeholder="Amount ₹" required>
+
+                <button type="submit">Add</button>
+            </form>
+        </div>
+
+        <!-- TABLE -->
+        <div class="card" style="flex:1;">
+            <h3>Expense List</h3>
+
+            {% if expenses %}
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+
+                {% for e in expenses %}
+                <tr>
+                    <td>{{ e.item }}</td>
+                    <td>₹{{ e.amount }}</td>
+                    <td>{{ e.date }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <div class="total">
+                Total: ₹{{ total }}
+            </div>
+
+            {% else %}
+            <p>No Expenses Yet</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
