@@ -16,20 +16,21 @@
         body {
             display: flex;
             background: linear-gradient(135deg, #1e3c72, #2a5298);
-            height: 100vh;
+            min-height: 100vh;
         }
 
         /* SIDEBAR */
         .sidebar {
-            width: 230px;
+            width: 240px;
             background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             color: white;
             padding: 20px;
         }
 
         .sidebar h2 {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            text-align: center;
         }
 
         .sidebar a {
@@ -44,12 +45,19 @@
 
         .sidebar a:hover {
             background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+
+        .active {
+            background: rgba(255,255,255,0.3);
+            border-left: 4px solid #00e5ff;
         }
 
         /* MAIN */
         .main {
             flex: 1;
-            padding: 20px;
+            padding: 25px;
+            overflow-y: auto;
         }
 
         /* TOP BAR */
@@ -66,6 +74,7 @@
             border-radius: 6px;
             text-decoration: none;
             color: white;
+            transition: 0.3s;
         }
 
         .logout:hover {
@@ -77,12 +86,10 @@
             margin-top: 30px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 25px;
         }
 
         .card {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(15px);
             border-radius: 15px;
             padding: 25px;
             color: white;
@@ -92,9 +99,16 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
+        /* Different colors for each card */
+        .card:nth-child(1) { background: linear-gradient(135deg, #36d1dc, #5b86e5); }
+        .card:nth-child(2) { background: linear-gradient(135deg, #ff9966, #ff5e62); }
+        .card:nth-child(3) { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+        .card:nth-child(4) { background: linear-gradient(135deg, #56ab2f, #a8e063); }
+        .card:nth-child(5) { background: linear-gradient(135deg, #f7971e, #ffd200); }
+        .card:nth-child(6) { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
+
         .card:hover {
-            transform: translateY(-8px);
-            background: rgba(255,255,255,0.25);
+            transform: translateY(-10px) scale(1.03);
         }
 
         .card i {
@@ -115,7 +129,7 @@
 <div class="sidebar">
     <h2>🎓 SSMS</h2>
 
-    <a href="/student_home/"><i class="fa fa-home"></i> Dashboard</a>
+    <a href="/student_home/" class="active"><i class="fa fa-home"></i> Dashboard</a>
     <a href="/timetable/"><i class="fa fa-calendar"></i> Timetable</a>
     <a href="/assignments/"><i class="fa fa-book"></i> Assignments</a>
     <a href="/notes/"><i class="fa fa-file"></i> Notes</a>
@@ -159,6 +173,8 @@
             <i class="fa fa-chart-bar"></i>
             <h3>Results</h3>
         </a>
+
+
 
     </div>
 

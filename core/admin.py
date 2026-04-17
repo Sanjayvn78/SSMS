@@ -1,16 +1,11 @@
 from django.contrib import admin
-from .models import Timetable, Assignment, Note, Expense, Result, CustomUser
+from .models import CustomUser, Timetable, Assignment, Submission, Note, Expense, Result, Student
 
 admin.site.register(CustomUser)
 admin.site.register(Timetable)
 admin.site.register(Assignment)
+admin.site.register(Submission)
 admin.site.register(Note)
 admin.site.register(Expense)
 admin.site.register(Result)
-
-
-from django.contrib import admin
-from .models import Student, Attendance
-
 admin.site.register(Student)
-admin.site.register(Attendance)

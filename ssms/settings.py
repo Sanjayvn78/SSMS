@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-#b7@^%*5l)lc2h1p)t82f#^sosq#75%toen!8))d(fb=lc_if9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -49,6 +49,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
 ]
 
 ROOT_URLCONF = 'ssms.urls'
@@ -76,8 +81,12 @@ WSGI_APPLICATION = 'ssms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ssms_db',
+        'USER': 'postgres',
+        'PASSWORD': '1234vish',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

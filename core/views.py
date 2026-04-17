@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, get_user_model
 from django.views.decorators.csrf import csrf_protect
 from .models import *
+
+User = get_user_model()
+
 
 @csrf_protect
 def login_page(request):
@@ -32,10 +34,9 @@ def student_home(request):
 
 
 def teacher_home(request):
-    return render(request, 'teacher_home.html')
+    return render(request, 'teacher_home.html')# ASSIGNMENT
 
-
-# ASSIGNMENT
+@csrf_protect
 def upload_assignment(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -61,14 +62,14 @@ def assignments(request):
 
 
 def delete_assignment(request, id):
-    if request.method == "POST":
+    if request.method == 'POST':
         Assignment.objects.filter(id=id).delete()
     return redirect('upload_assignment')
 
 
 # NOTES
 def upload_notes(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         Note.objects.create(
             subject=request.POST.get('subject'),
             content=request.POST.get('content'),
@@ -85,16 +86,16 @@ def notes(request):
     data = Note.objects.all()
     return render(request, 'notes.html', {'notes': data})
 
+
 def delete_note(request, id):
-    if request.method == "POST":
+    if request.method == 'POST':
         Note.objects.filter(id=id).delete()
-        return redirect('upload_notes')
     return redirect('upload_notes')
 
 
 # TIMETABLE
 def upload_timetable(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         Timetable.objects.create(
             day=request.POST.get('day'),
             p1=request.POST.get('p1'),
@@ -117,15 +118,14 @@ def timetable(request):
 
 
 def delete_timetable(request, id):
-    if request.method == "POST":
+    if request.method == 'POST':
         Timetable.objects.filter(id=id).delete()
-        return redirect('upload_timetable')
     return redirect('upload_timetable')
 
 
 # RESULTS
 def manage_results(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         Result.objects.create(
             subject=request.POST.get('subject'),
             marks=request.POST.get('marks')
@@ -142,65 +142,53 @@ def results(request):
 
 
 def delete_result(request, id):
-    if request.method == "POST":
+    if request.method == 'POST':
         Result.objects.filter(id=id).delete()
-        return redirect('manage_results')
     return redirect('manage_results')
 
+
+# EXPENSES
 def expenses(request):
     if request.method == 'POST':
-        item = request.POST.get('title')
+        title = request.POST.get('title')
         amount = request.POST.get('amount')
 
-        Expense.objects.create(item=item, amount=amount)
-
-        return redirect('expenses')   # ✅ NOT assignments
+        Expense.objects.create(title=title, amount=amount)
+        return redirect('expenses')
 
     data = Expense.objects.all()
     total = sum(e.amount for e in data)
+    return render(request, 'expenses.html', {'expenses': data, 'total': total})
 
-    return render(request, 'expenses.html', {
-        'expenses': data,
-        'total': total
-    })
+
+# STUDENT ASSIGNMENTS
 def student_assignments(request):
     assignments = Assignment.objects.all()
 
-    if request.method == "POST":
-        assignment_id = request.POST.get("assignment_id")
-        file = request.FILES.get("file")
+    if request.method == 'POST':
+        assignment_id = request.POST.get('assignment_id')
+        file = request.FILES.get('file')
 
         Submission.objects.create(
             assignment_id=assignment_id,
             student_name=request.user.username,
             file=file
         )
-
         return redirect('student_assignments')
 
-    return render(request, 'student_assignments.html', {
-        'assignments': assignments
-    })
+    return render(request, 'student_assignments.html', {'assignments': assignments})
+
+
 def view_submissions(request):
     submissions = Submission.objects.all()
-    return render(request, 'view_submissions.html', {
-        'submissions': submissions
-    })
-from django.shortcuts import render, redirect
-from .models import Assignment, Submission
+    return render(request, 'view_submissions.html', {'submissions': submissions})
 
 
-# 👨‍🎓 STUDENT VIEW ASSIGNMENTS
-def assignments(request):
-    data = Assignment.objects.all()
-    return render(request, 'assignments.html', {'assignments': data})
-
-
-# 📥 STUDENT SUBMIT
+# STUDENT SUBMIT
 def submit_assignment(request, id):
     assignment = Assignment.objects.get(id=id)
 
-    if request.method == "POST":
+    if request.method == 'POST':
         name = request.POST.get('name')
         file = request.FILES.get('file')
 
@@ -214,50 +202,14 @@ def submit_assignment(request, id):
     return render(request, 'student_assignments.html', {'a': assignment})
 
 
-# 👨‍🏫 TEACHER VIEW SUBMISSIONS
-def view_submissions(request):
-    data = Submission.objects.all()
-    return render(request, 'view_submissions.html', {'data': data})
-from django.shortcuts import render
-from .models import Student, Attendance
+from django.contrib.auth.decorators import login_required
+from .models import Result
 
-def attendance_report(request):
-    students = Student.objects.all()
+@login_required
+def student_result(request):
+    result = Result.objects.filter(student=request.user).first()
 
-    data = []
-
-    for s in students:
-        total = Attendance.objects.filter(student=s).count()
-        present = Attendance.objects.filter(student=s, status="Present").count()
-
-        percentage = (present / total * 100) if total > 0 else 0
-
-        data.append({
-            "name": s.student_name,
-            "total": total,
-            "present": present,
-            "percentage": round(percentage, 2)
-        })
-
-    return render(request, "attendance.html", {"data": data})
-from django.shortcuts import render
-from .models import Student, Attendance
-
-def attendance_report(request):
-    students = Student.objects.all()
-    data = []
-
-    for s in students:
-        total = Attendance.objects.filter(student=s).count()
-        present = Attendance.objects.filter(student=s, status="Present").count()
-
-        percentage = (present / total * 100) if total > 0 else 0
-
-        data.append({
-            "name": s.student_name,
-            "total": total,
-            "present": present,
-            "percentage": round(percentage, 2)
-        })
-
-    return render(request, "attendance.html", {"data": data})
+    return render(request, 'result.html', {
+        'result': result,
+        'student_name': request.user.username
+    })

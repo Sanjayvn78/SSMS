@@ -16,7 +16,7 @@
         body {
             display: flex;
             background: linear-gradient(135deg, #1e3c72, #2a5298);
-            height: 100vh;
+            min-height: 100vh;
             color: white;
         }
 
@@ -24,12 +24,13 @@
         .sidebar {
             width: 240px;
             background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             padding: 20px;
         }
 
         .sidebar h2 {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            text-align: center;
         }
 
         .sidebar a {
@@ -44,17 +45,19 @@
 
         .sidebar a:hover {
             background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
         }
 
-        .sidebar a.active {
+        .active {
             background: rgba(255,255,255,0.3);
-            border-left: 5px solid #00e5ff;
+            border-left: 4px solid #00e5ff;
         }
 
         /* MAIN */
         .main {
             flex: 1;
-            padding: 20px;
+            padding: 25px;
+            overflow-y: auto;
         }
 
         /* TOPBAR */
@@ -70,32 +73,40 @@
             border-radius: 6px;
             text-decoration: none;
             color: white;
+            transition: 0.3s;
         }
 
-        /* GRID (2 PER ROW) */
+        .logout:hover {
+            background: #cc0000;
+        }
+
+        /* CARDS */
         .cards {
+            margin-top: 30px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 25px;
-            margin-top: 30px;
         }
 
-        /* CARD */
         .card {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(12px);
             border-radius: 15px;
             padding: 30px;
             text-align: center;
             text-decoration: none;
             color: white;
-            box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
             transition: 0.3s;
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
         }
 
+        /* Gradient colors */
+        .card:nth-child(1) { background: linear-gradient(135deg, #ff9966, #ff5e62); }
+        .card:nth-child(2) { background: linear-gradient(135deg, #36d1dc, #5b86e5); }
+        .card:nth-child(3) { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+        .card:nth-child(4) { background: linear-gradient(135deg, #f7971e, #ffd200); }
+        .card:nth-child(5) { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
+
         .card:hover {
-            transform: translateY(-8px);
-            background: rgba(255,255,255,0.25);
+            transform: translateY(-10px) scale(1.03);
         }
 
         .card i {
@@ -116,11 +127,11 @@
 <div class="sidebar">
     <h2>👨‍🏫 Teacher</h2>
 
-    <a href="/teacher_home/" class="active">Dashboard</a>
-    <a href="/upload_assignment/">Assignments</a>
-    <a href="/upload_notes/">Notes</a>
-    <a href="/upload_timetable/">Timetable</a>
-    <a href="/manage_results/">Results</a>
+    <a href="/teacher_home/" class="active"><i class="fa fa-home"></i> Dashboard</a>
+    <a href="/upload_assignment/"><i class="fa fa-upload"></i> Assignments</a>
+    <a href="/upload_notes/"><i class="fa fa-book"></i> Notes</a>
+    <a href="/upload_timetable/"><i class="fa fa-calendar"></i> Timetable</a>
+    <a href="/manage_results/"><i class="fa fa-chart-line"></i> Results</a>
 </div>
 
 <!-- MAIN -->
@@ -154,6 +165,7 @@
             <i class="fa fa-chart-line"></i>
             <h3>Manage Results</h3>
         </a>
+
 
     </div>
 

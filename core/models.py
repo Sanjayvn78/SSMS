@@ -8,6 +8,9 @@ class CustomUser(AbstractUser):
     )
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
 
+    def __str__(self):
+        return self.username
+
 
 class Timetable(models.Model):
     day = models.CharField(max_length=20)
@@ -28,6 +31,19 @@ class Assignment(models.Model):
     description = models.TextField()
     deadline = models.DateField()
 
+    def __str__(self):
+        return self.title
+
+
+class Submission(models.Model):
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    student_name = models.CharField(max_length=100)
+    file = models.FileField(upload_to='submissions/')
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.student_name
+
 
 class Note(models.Model):
     subject = models.CharField(max_length=100)
@@ -35,23 +51,26 @@ class Note(models.Model):
     file = models.FileField(upload_to='notes/', null=True, blank=True)
     video_link = models.URLField(null=True, blank=True)
 
+    def __str__(self):
+        return self.subject
+
 
 class Expense(models.Model):
-    item = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     amount = models.IntegerField()
     date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Result(models.Model):
     subject = models.CharField(max_length=100)
     marks = models.IntegerField()
 
-class Submission(models.Model):
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
-    student_name = models.CharField(max_length=100)
-    file = models.FileField(upload_to='submissions/')
-    submitted_at = models.DateTimeField(auto_now_add=True)
-from django.db import models
+    def __str__(self):
+        return self.subject
+
 
 class Student(models.Model):
     student_name = models.CharField(max_length=100)
@@ -59,23 +78,3 @@ class Student(models.Model):
 
     def __str__(self):
         return self.student_name
-
-
-class Attendance(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    attendance_date = models.DateField()
-    status = models.CharField(max_length=10)  # Present / Absent
-
-def __str__(self):
-        return f"{self.student.student_name} - {self.status}"
-        from django.db import models
-
-class Student(models.Model):
-    student_name = models.CharField(max_length=100)
-    department = models.CharField(max_length=50)
-
-
-class Attendance(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    date = models.DateField()
-    status = models.CharField(max_length=10)
