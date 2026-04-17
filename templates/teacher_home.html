@@ -15,7 +15,16 @@
 
         body {
             display: flex;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+
+            /* STAFF RELATED BACKGROUND IMAGE */
+            background:
+                linear-gradient(rgba(30,60,114,0.85), rgba(42,82,152,0.85)),
+                url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f');
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
             min-height: 100vh;
             color: white;
         }
@@ -103,7 +112,6 @@
         .card:nth-child(2) { background: linear-gradient(135deg, #36d1dc, #5b86e5); }
         .card:nth-child(3) { background: linear-gradient(135deg, #00c6ff, #0072ff); }
         .card:nth-child(4) { background: linear-gradient(135deg, #f7971e, #ffd200); }
-        .card:nth-child(5) { background: linear-gradient(135deg, #8e2de2, #4a00e0); }
 
         .card:hover {
             transform: translateY(-10px) scale(1.03);
@@ -165,7 +173,6 @@
             <i class="fa fa-chart-line"></i>
             <h3>Manage Results</h3>
         </a>
-
 
     </div>
 

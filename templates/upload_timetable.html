@@ -15,8 +15,17 @@
 
         body {
             display: flex;
-            background: linear-gradient(135deg, #0f172a, #1e3a8a);
-            height: 100vh;
+
+            /* BACKGROUND IMAGE (Classroom / Timetable related) */
+            background:
+                linear-gradient(rgba(15,23,42,0.85), rgba(30,58,138,0.85)),
+                url('https://images.unsplash.com/photo-1588072432836-e10032774350');
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            min-height: 100vh;
             color: white;
         }
 
@@ -121,6 +130,7 @@
             margin-top: 20px;
             border-radius: 10px;
             overflow: hidden;
+            backdrop-filter: blur(10px);
         }
 
         th {

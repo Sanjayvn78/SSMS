@@ -9,7 +9,16 @@
         body {
             margin: 0;
             font-family: 'Segoe UI';
-            background: linear-gradient(135deg, #0a1931, #1e3a8a);
+
+            /* BACKGROUND IMAGE (Notes / Study related) */
+            background:
+                linear-gradient(rgba(10,25,49,0.85), rgba(30,58,138,0.85)),
+                url('https://images.unsplash.com/photo-1517842645767-c639042777db');
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
             color: white;
         }
 
@@ -17,9 +26,10 @@
         .sidebar {
             width: 240px;
             height: 100vh;
-            background: #0b2545;
+            background: rgba(11,37,69,0.9);
             position: fixed;
             padding: 20px;
+            backdrop-filter: blur(10px);
         }
 
         .sidebar h2 {
@@ -97,7 +107,8 @@
 
         /* FORM CARD */
         .form-card {
-            background: #133b5c;
+            background: rgba(19,59,92,0.9);
+            backdrop-filter: blur(10px);
             padding: 20px;
             border-radius: 12px;
             width: 380px;
@@ -130,7 +141,8 @@
         table {
             width: 100%;
             margin-top: 20px;
-            background: #133b5c;
+            background: rgba(19,59,92,0.9);
+            backdrop-filter: blur(10px);
             border-collapse: collapse;
             border-radius: 10px;
             overflow: hidden;

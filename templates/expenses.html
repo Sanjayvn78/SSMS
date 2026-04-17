@@ -15,8 +15,14 @@
 
         body {
             display: flex;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            height: 100vh;
+
+            background:
+                linear-gradient(rgba(30,60,114,0.8), rgba(42,82,152,0.8)),
+                url('https://images.unsplash.com/photo-1554224155-6726b3ff858f');
+
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
         }
 
         /* SIDEBAR */
@@ -48,7 +54,6 @@
 
         .sidebar a.active {
             background: rgba(255,255,255,0.3);
-            font-weight: bold;
             border-left: 5px solid #00e5ff;
         }
 
@@ -123,7 +128,7 @@
             width: 100%;
             margin-top: 10px;
             border-collapse: collapse;
-            background: white;
+            background: rgba(255,255,255,0.95);
             color: black;
             border-radius: 10px;
             overflow: hidden;
@@ -140,11 +145,21 @@
             text-align: center;
         }
 
+        tr:hover {
+            background: #f2f2f2;
+        }
+
         .total {
             margin-top: 15px;
             font-size: 18px;
             color: #00ffcc;
             font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
         }
 
     </style>
@@ -177,7 +192,7 @@
 
         <!-- FORM -->
         <div class="card form-card">
-            <h3>Add Expense</h3>
+            <h3><i class="fa fa-plus"></i> Add Expense</h3>
 
             <form method="POST">
                 {% csrf_token %}
@@ -185,13 +200,13 @@
                 <input type="text" name="title" placeholder="Expense Name" required>
                 <input type="number" name="amount" placeholder="Amount ₹" required>
 
-                <button type="submit">Add</button>
+                <button type="submit">Add Expense</button>
             </form>
         </div>
 
         <!-- TABLE -->
         <div class="card" style="flex:1;">
-            <h3>Expense List</h3>
+            <h3><i class="fa fa-list"></i> Expense List</h3>
 
             {% if expenses %}
             <table>
@@ -203,7 +218,8 @@
 
                 {% for e in expenses %}
                 <tr>
-                    <td>{{ e.item }}</td>
+                    <!-- ✅ FIXED HERE -->
+                    <td>{{ e.title }}</td>
                     <td>₹{{ e.amount }}</td>
                     <td>{{ e.date }}</td>
                 </tr>
@@ -215,7 +231,10 @@
             </div>
 
             {% else %}
-            <p>No Expenses Yet</p>
+            <div class="empty">
+                <i class="fa fa-wallet fa-2x"></i>
+                <p>No Expenses Yet</p>
+            </div>
             {% endif %}
         </div>
 

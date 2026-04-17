@@ -9,7 +9,16 @@
         body {
             margin: 0;
             font-family: 'Segoe UI';
-            background: #0f172a;
+
+            /* BACKGROUND IMAGE */
+            background:
+                linear-gradient(rgba(15,23,42,0.85), rgba(15,23,42,0.85)),
+                url('https://images.unsplash.com/photo-1523580494863-6f3031224c94');
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
             color: white;
         }
 
@@ -17,11 +26,12 @@
         .sidebar {
             width: 240px;
             height: 100vh;
-            background: #1e293b;
+            background: rgba(30,41,59,0.9);
             position: fixed;
             top: 0;
             left: 0;
             padding: 20px;
+            backdrop-filter: blur(10px);
         }
 
         .sidebar h2 {
@@ -67,10 +77,11 @@
 
         /* RESULT CARD */
         .card {
-            background: #1e293b;
+            background: rgba(30,41,59,0.9);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0px 5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
         }
 
         .header {
@@ -184,14 +195,12 @@
             END SEMESTER EXAMINATION RESULTS
         </div>
 
-        <!-- DETAILS (DYNAMIC) -->
+        <!-- DETAILS -->
         <div class="details">
             <div class="row">
                 <div class="label">NAME</div>
                 <div>{{ request.user.username }}</div>
             </div>
-
-    
         </div>
 
         <!-- TABLE -->
